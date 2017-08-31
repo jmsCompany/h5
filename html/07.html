@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>潜拓科技</title>
+
+		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/jquery.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/config.js"></script>
+
+		<script src="../assets/require.min.js" data-main="../assets/main.js"></script>
+		<!--默认样式、脚本引用在main.js里面定义，您也可以在下面直接添加其它样式、脚本文件：
+		<link href="../assets/css/*.css"/>
+		<script src="../assets/js/*.js"></script>
+		-->
+
+
+
+	</head>
+	<body class="">
+		<!-------------------------------------- 头部开始 -------------------------------------->
+		<header>
+			<div class="container">
+				<div class="head">
+					<a href="03.html" class="bt back"></a>
+					<div class="ct">
+						<p id="address"></p>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-------------------------------------- 头部结束 -------------------------------------->
+		<!-------------------------------------- 主体开始 -------------------------------------->
+		<main>
+			<div class="container">
+				<div class="ui-light">
+					<div class="view">
+						<p>25.3%</p>
+						<div id="container" style="height:400px;margin: -140px 0px -160px 0px">
+
+							<!--<img src="../assets/app/img/status-c1.png" alt="">-->
+						</div>
+
+						<div class="txt">
+							<table>
+								<tr>
+									<td>
+										<label for=""><img src="../assets/app/img/status-ico1.png" alt="">
+											发电功率：<label id="fdgl"></label>kW
+										</label>
+									</td>
+									<td>
+										<label for=""><img src="../assets/app/img/status-ico2.png" alt="">
+											运行状态：<label id="yxzt"></label>
+										</label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for=""><img src="../assets/app/img/status-ico3.png" alt="">
+											装机容量：<label id="zjrl"></label>kW
+										</label>
+									</td>
+									<td>
+										<label for=""><img src="../assets/app/img/status-ico4.png" alt="">
+											创建时间：<label id="cjsj"></label>
+										</label>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="list">
+						<ul>
+							<li>
+								<div class="i bd-1">
+									<table>
+										<tr>
+											<td rowspan="3" align="center"><img src="../assets/app/img/status-ico5.png" alt=""></td>
+											<td>当日电量</td>
+											<td>累计电量</td>
+										</tr>
+										<tr>
+											<td id="drdl"></td>
+											<td id="ljdl"></td>
+										</tr>
+									</table>
+								</div>
+							</li>
+							<li>
+								<div class="i bd-1">
+									<table>
+										<tr>
+											<td rowspan="3" align="center"><img src="../assets/app/img/status-ico6.png" alt=""></td>
+											<td>当日收益</td>
+											<td>累计收益</td>
+										</tr>
+										<tr>
+											<td id="drsy"></td>
+											<td id="ljsy"></td>
+										</tr>
+									</table>
+								</div>
+							</li>
+							<li>
+								<div class="i bd-1">
+									<table>
+										<tr>
+											<td rowspan="3" align="center"><img src="../assets/app/img/status-ico7.png" alt=""></td>
+											<td>当日减排</td>
+											<td>累计减排</td>
+										</tr>
+										<tr>
+											<td id="drjp"></td>
+											<td id="ljjp"></td>
+										</tr>
+									</table>
+								</div>
+							</li>
+							<li>
+								<div class="i bd-1">
+									<table>
+										<tr>
+											<td rowspan="3" align="center"><img src="../assets/app/img/status-ico8.png" alt=""></td>
+											<td>当日种植</td>
+											<td>累计种植</td>
+										</tr>
+										<tr>
+											<td id="drzz"></td>
+											<td id="ljzz"></td>
+										</tr>
+									</table>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-------------------------------------- 主体结束 -------------------------------------->
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<footer>
+			<div class="container">
+				<div class="foot span4">
+					<ul>
+						<li>
+							<a href="07.html" class="i on">
+								<p><i class="ico4"></i></p>
+								<p>主页</p>
+							</a>
+						</li>
+						<li>
+							<a href="08.html" class="i">
+								<p><i class="ico5"></i></p>
+								<p>曲线图</p>
+							</a>
+						</li>
+						<li>
+							<a href="12.html" class="i">
+								<p><i class="ico6"></i></p>
+								<p>设备列表</p>
+							</a>
+						</li>
+						<li>
+							<a href="13.html" class="i">
+								<p><i class="ico7"></i></p>
+								<p>地图</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+
+		<script type="text/javascript">
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!=null)return  unescape(r[2]); return null;
+            }
+			var id = GetQueryString('id');
+            var token = localStorage.getItem('token');
+            if(GetQueryString('id')){
+                localStorage.setItem('id',GetQueryString('id'))
+			}else{
+                id = localStorage.getItem('id');
+			}
+            $.ajax({
+                url:$clientURL+'/m/proj?id='+ id,
+                type:'GET',
+                contentType: "application/json; charset=utf-8",
+                processData:   true,
+                dataType: "json",
+                headers:{'JMS-TOKEN':token},
+                success: function(data){
+                    localStorage.setItem('address',data.address)
+                    $('#address').html(data.address)
+                    $('#fdgl').html(data.fdgl)
+					$('#yxzt').html(data.yxzt)
+					$('#zjrl').html(data.zjrl)
+					$('#cjsj').html(data.cjsj)
+					$('#drdl').html(data.drdl+'kWh')
+                    $('#ljdl').html(data.ljdl+'kWh')
+                    $('#drsy').html('￥'+data.drsy)
+					$('#ljsy').html('￥'+data.ljsy)
+                    $('#drjp').html(data.drjp+'吨')
+                    $('#ljjp').html(data.ljjp+'吨')
+                    $('#drzz').html(data.drzz+'吨')
+                    $('#ljzz').html(data.ljzz+'棵')
+
+                    var dom = document.getElementById("container");
+                    var myChart = echarts.init(dom);
+                    var data2 = [{
+                        value: data.bfb
+                    }, {
+                        value: 100-data.bfb
+                    }];
+                    var a = 0;
+                    for (var i = 0; i < data2.length; i++) {
+                        a += data2[i].value;
+                    }
+                    data2.push({
+                        value: a,
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(255,0,0,0)'
+                            }
+                        }
+                    });
+                    var option = {
+                        title: {
+                            text: data.bfb + '%',
+                            x: 'center',
+                            y: 200,
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 32,
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            startAngle: -180,
+                            radius: ['50%', '70%'],
+                            center: ['50%', '60%'],
+                            color: ["#70dc00",'#328800'],
+                            data: data2,
+                            "hoverAnimation": false,
+                            "legendHoverLink": false,
+                            "label": {
+                                "normal": {
+                                    "show": false,
+                                    "position": 'center'
+                                },
+                                "emphasis": {
+                                    "show": true,
+                                    "textStyle": {
+                                        "fontSize": '30',
+                                        "fontWeight": 'bold'
+                                    }
+                                }
+                            },
+                            "labelLine": {
+                                "normal": {
+                                    "show": false
+                                }
+                            },
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }]
+                    };
+                    myChart.setOption(option, true);
+                },
+                error:function(err){
+                    console.log(err)
+                }
+            });
+
+
+
+		</script>
+	</body>
+</html>

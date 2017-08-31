@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>潜拓科技</title>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=ovW97sIaF51o5ADwMGOq4Oza"></script>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/jquery.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/config.js"></script>
+		<script src="../assets/require.min.js" data-main="../assets/main.js"></script>
+		<!--默认样式、脚本引用在main.js里面定义，您也可以在下面直接添加其它样式、脚本文件：
+		<link href="../assets/css/*.css"/>
+		<script src="../assets/js/*.js"></script>
+		-->
+		<style>
+			
+		</style>
+	</head>
+	<body class="">
+		<!-------------------------------------- 头部开始 -------------------------------------->
+		<header>
+			<div class="container">
+				<div class="head">
+					<a href="03.html" class="bt back"></a>
+					<div class="ct">
+						<p id="address"></p>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-------------------------------------- 头部结束 -------------------------------------->
+		<!-------------------------------------- 主体开始 -------------------------------------->
+		<main>
+			<div class="container">
+				<div class="ui-location bd-1 full">
+					<div style="height:100%" id="dituContent"></div>
+
+				</div>
+			</div>
+		</main>
+		<!-------------------------------------- 主体结束 -------------------------------------->
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<footer>
+			<div class="container">
+				<div class="foot span4">
+					<ul>
+						<li>
+							<a href="07.html" class="i">
+								<p><i class="ico4"></i></p>
+								<p>主页</p>
+							</a>
+						</li>
+						<li>
+							<a href="08.html" class="i">
+								<p><i class="ico5"></i></p>
+								<p>曲线图</p>
+							</a>
+						</li>
+						<li>
+							<a href="12.html" class="i">
+								<p><i class="ico6"></i></p>
+								<p>设备列表</p>
+							</a>
+						</li>
+						<li>
+							<a href="13.html" class="i on">
+								<p><i class="ico7"></i></p>
+								<p>地图</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<script type="text/javascript">
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!=null)return  unescape(r[2]); return null;
+            }
+            var id = GetQueryString('id');
+            var token = localStorage.getItem('token');
+            if(GetQueryString('id')){
+                localStorage.setItem('id',GetQueryString('id'))
+            }else{
+                id = localStorage.getItem('id');
+            }
+            $("#address").html(localStorage.getItem('address'))
+            $.ajax({
+                url:$clientURL+'/m/getloc?id='+id,
+                type:'GET',
+                contentType: "application/json; charset=utf-8",
+                processData:   true,
+                dataType: "json",
+                headers:{'JMS-TOKEN':token},
+                success: function(data){
+                    //创建和初始化地图函数：
+                    function initMap(){
+                        createMap();//创建地图
+                        setMapEvent();//设置地图事件
+                        addMapControl();//向地图添加控件
+                        addMarker();//向地图中添加marker
+                    }
+
+                    //创建地图函数：
+                    function createMap(){
+                        var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+                        var point = new BMap.Point(data.lat,data.lang);//定义一个中心点坐标
+                        map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+                        window.map = map;//将map变量存储在全局
+                    }
+
+                    //地图事件设置函数：
+                    function setMapEvent(){
+                        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                        map.enableKeyboard();//启用键盘上下左右键移动地图
+                    }
+
+                    //地图控件添加函数：
+                    function addMapControl(){
+                        //向地图中添加缩放控件
+                        var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+                        map.addControl(ctrl_nav);
+                        //向地图中添加缩略图控件
+                        var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+                        map.addControl(ctrl_ove);
+                        //向地图中添加比例尺控件
+                        var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+                        map.addControl(ctrl_sca);
+                    }
+
+                    //标注点数组
+                    var markerArr = [{point:data.lat+'|'+data.lang,isOpen:0,icon:{}}
+                    ];
+                    //创建marker
+                    function addMarker(){
+                        for(var i=0;i<markerArr.length;i++){
+                            var json = markerArr[i];
+                            var p0 = json.point.split("|")[0];
+                            var p1 = json.point.split("|")[1];
+                            var point = new BMap.Point(p0,p1);
+                            var iconImg = createIcon(json.icon);
+                            var marker = new BMap.Marker(point,{icon:iconImg});
+                            var iw = createInfoWindow(i);
+                            var label = new BMap.Label('',{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
+                            marker.setLabel(label);
+                            map.addOverlay(marker);
+                            label.setStyle({
+                                borderColor:"#808080",
+                                color:"#333",
+                                cursor:"pointer"
+                            });
+
+                            (function(){
+                                var index = i;
+                                var _iw = createInfoWindow(i);
+                                var _marker = marker;
+
+                            })()
+                        }
+                    }
+                    //创建InfoWindow
+                    function createInfoWindow(i){
+//                var json = markerArr[i];
+//                var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");
+//                return iw;
+                    }
+                    //创建一个Icon
+                    function createIcon(json){
+//                var icon = new BMap.Icon("/Public/Home/img/logo.png", new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
+//                return icon;
+                    }
+
+                    initMap();//创建和初始化地图
+                },
+                error:function(err){
+                    console.log(err)
+                }
+            });
+
+
+
+
+
+		</script>
+	</body>
+</html>

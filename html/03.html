@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>潜拓科技</title>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/jquery.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/config.js"></script>
+		<script src="../assets/require.min.js" data-main="../assets/main.js"></script>
+		<!--默认样式、脚本引用在main.js里面定义，您也可以在下面直接添加其它样式、脚本文件：
+		<link href="../assets/css/*.css"/>
+		<script src="../assets/js/*.js"></script>
+		-->
+		<style>
+			
+		</style>
+	</head>
+	<body class="">
+		<!-------------------------------------- 头部开始 -------------------------------------->
+		<header>
+			<div class="container">
+				<div class="head">
+					<div class="ct">
+						<p>电站列表</p>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-------------------------------------- 头部结束 -------------------------------------->
+		<!-------------------------------------- 主体开始 -------------------------------------->
+		<main>
+			<div class="container">
+
+				<div class="ui-station">
+
+					<ul>
+
+					</ul>
+				</div>
+			</div>
+		</main>
+		<!-------------------------------------- 主体结束 -------------------------------------->
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<footer>
+			<div class="container">
+				<div class="foot span3">
+					<ul>
+						<li>
+							<a href="03.html" class="i on">
+								<p><i class="ico1"></i></p>
+								<p>电站列表</p>
+							</a>
+						</li>
+						<li>
+							<a href="02.html" class="i">
+								<p><i class="ico2"></i></p>
+								<p>用户</p>
+							</a>
+						</li>
+						<li>
+							<a href="04.html" class="i">
+								<p><i class="ico3"></i></p>
+								<p>帮助</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<script>
+			var token = localStorage.getItem('token');
+			$.ajax({
+				url:$clientURL+'/m/projList',
+				type:'POST',
+				contentType: "application/json; charset=utf-8",
+				processData:   true,
+				dataType: "json",
+                headers:{'JMS-TOKEN':token},
+				success: function(data){
+
+					var html = ''
+                	data.forEach(function (date) {
+							html +='<li>';
+							html +='<a href="07.html?id='+ date.id +'">'
+                        	html +='<div class="i bd-1"><img src='+ $clientURL+'/getImage/'+ date.pic+'/' +' alt="">';
+                        	html +='<div class="text">';
+                        	html +='<div class="hd">';
+                        	html +='<p>'+ date.address +'</p>';
+                        	html +='</div>';
+                        	html +='<div class="ct">';
+                        	html +='<table><tr><td><div class="i">';
+                        	html +='<p><label for="" class="c1">整机容量：</label></p>';
+                        	html +='<p>'+ date.zjrl +'kW</p>';
+                        	html +='</div></td>';
+                        	html +='<td>';
+                        	html +='<div class="i">';
+                        	html +='<p><label for="" class="c1">发电功率：</label></p>'
+                        	html +='<p>'+ date.fdgl +'kW</p>';
+                        	html +='</div></td></tr>';
+                        	html +='<tr><td><div class="i">';
+                        	html +='<p><label for="" class="c2">当日发电：</label></p>';
+                        	html +='<p>'+ date.drfd +'Wh</p>';
+                        	html +='</div></td>';
+                        	html +='<td><div class="i">';
+                        	html +='<p><label for="" class="c2">累计发电：</label></p>';
+                        	html +='<p>' + date.ljfd +'kWh</p>';
+                        	html +='</div></td></tr>';
+                        	html +='<tr><td><div class="i">';
+                        	html +='<p><label for="" class="c3">当日收益：</label></p>'
+                        	html +='<p>￥'+ date.drsy +'</p>'
+                        	html +='</div></td>'
+                        	html +='<td>'
+                        	html +='<div class="i">'
+                        	html +='<p><label for="" class="c3">累计收益：</label></p>'
+                        	html +='<p>￥'+ date.ljsy +'</p>'
+                        	html +='</div></td></tr></table>'
+                        	html +='</div></div>'
+                        	html +='<div class="clearfix"></div>'
+                        	html +='</div></a></li>'
+                    })
+					$('.ui-station ul').html(html)
+				},
+				error:function(err){
+					console.log(err)
+				}
+			});
+		</script>
+	</body>
+</html>

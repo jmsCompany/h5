@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>潜拓科技</title>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/jquery.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/config.js"></script>
+		<script src="../assets/require.min.js" data-main="../assets/main.js"></script>
+		<!--默认样式、脚本引用在main.js里面定义，您也可以在下面直接添加其它样式、脚本文件：
+		<link href="../assets/css/*.css"/>
+		<script src="../assets/js/*.js"></script>
+		-->
+		<style>
+			
+		</style>
+	</head>
+	<body class="">
+		<!-------------------------------------- 头部开始 -------------------------------------->
+		<header>
+			<div class="container">
+				<div class="head">
+					<div class="ct">
+						<p>用户</p>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-------------------------------------- 头部结束 -------------------------------------->
+		<!-------------------------------------- 主体开始 -------------------------------------->
+		<main>
+			<div class="container">
+				<div class="ui-userform bd-1">
+					<div class="hd">
+						<p><img src="../assets/app/img/logo-2.png" alt=""></p>
+						<p>编辑修改用户信息</p>
+					</div>
+					<div class="ct">
+						<div class="ui-form">
+							<div class="p">
+								<div class="input text">
+									<input type="text" class="ico1" placeholder="请输入登录账户/手机" maxlength="30">
+								</div>
+							</div>
+							<div class="ht10"></div>
+							<div class="p">
+								<div class="input text">
+									<input type="password" class="ico2" placeholder="请输入新密码" minlength="6" maxlength="30">
+								</div>
+							</div>
+							<div class="ht10"></div>
+							<div class="p">
+								<div class="input text">
+									<input type="text" class="ico3" placeholder="请输入邮箱地址" maxlength="50">
+								</div>
+							</div>
+							<div class="ht50"></div>
+							<div class="p">
+								<p><a class="bt-1" style="width: 26rem;">提交</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="ht30"></div>
+				</div>
+			</div>
+		</main>
+		<!-------------------------------------- 主体结束 -------------------------------------->
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<footer>
+			<div class="container">
+				<div class="foot span3">
+					<ul>
+						<li>
+							<a href="03.html" class="i">
+								<p><i class="ico1"></i></p>
+								<p>电站列表</p>
+							</a>
+						</li>
+						<li>
+							<a href="02.html" class="i on">
+								<p><i class="ico2"></i></p>
+								<p>用户</p>
+							</a>
+						</li>
+						<li>
+							<a href="04.html" class="i">
+								<p><i class="ico3"></i></p>
+								<p>帮助</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<script>
+            $('.bt-1').click(function () {
+                if($('.ico1').val() == ''){
+                    alert('名称不能为空')
+					return false
+				}
+                var reg = /^\w+$/;
+                // 如果验证失败给出警告
+                if(!reg.test($('.ico1').val())){
+                    alert("用户名限定为字母、数字或下划线的组合");
+                    return false
+                }
+                if($('.ico2').val().length <6){
+                    alert('密码必须大于6位')
+                    return false
+                }
+
+                // 如果验证失败给出警告
+                if(!reg.test($('.ico2').val())){
+                    alert("密码限定为字母、数字或下划线的组合");
+                    return false
+                }
+
+                if(!$('.ico3').val().match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/))
+                {
+                    alert("邮箱格式不正确！请重新输入");
+                    return false
+                }
+
+                $.ajax({
+                    url:$clientURL+'/m/updateUser',
+                    type:'POST',
+                    contentType: "application/json; charset=utf-8",
+                    processData:   true,
+                    dataType: "json",
+                    data:JSON.stringify({
+                        'username': $('.ico1').val(),
+                        'newPassword': $('.ico2').val(),
+						'email':$('.ico3').val()
+                    }),
+                    success: function(data){
+                        if(data.valid){
+                            alert('修改成功');
+                            window.location.href='03.html';
+                        }else{
+                            alert(data.msg)
+                        }
+                    },
+                    error:function(err){
+                        console.log(err)
+                    }
+                });
+            })
+		</script>
+	</body>
+</html>

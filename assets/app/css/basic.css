@@ -1,0 +1,30 @@
+/*!
+ * basic.css
+ */
+html{
+  font-size: 10px;
+}
+body{
+  font-family: 苹方, 微软雅黑;
+  background-color: #f0f4f5;
+}
+.container{
+	width: 100%;
+	padding: 0;
+	position: relative;
+}
+.container-fluid{
+
+}
+h1{
+
+}
+p{
+
+}
+a{
+
+}
+a:hover{
+	
+}

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<title>潜拓科技</title>
+
+		<!--默认样式、脚本引用在main.js里面定义，您也可以在下面直接添加其它样式、脚本文件：
+		<link href="../assets/css/*.css"/>
+		<script src="../assets/js/*.js"></script>
+		-->
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/jquery.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="../assets/plugin/js/config.js"></script>
+		<script src="../assets/require.min.js" data-main="../assets/main.js"></script>
+		<style>
+			
+		</style>
+	</head>
+	<body class="no-header no-footer">
+		<!-------------------------------------- 头部开始 -------------------------------------->
+		<header>
+			<div class="container">
+				
+			</div>
+		</header>
+		<!-------------------------------------- 头部结束 -------------------------------------->
+		<!-------------------------------------- 主体开始 -------------------------------------->
+		<main>
+			<div class="container">
+				<div class="ui-login">
+					<div class="hd">
+						<p><img src="../assets/app/img/logo-1.png" alt=""></p>
+					</div>
+					<div class="ct">
+						<div class="ui-form">
+							<div class="p">
+								<div class="input text">
+									<input type="text" class="ico1" placeholder="请输入登录账户/手机">
+								</div>
+							</div>
+							<div class="ht10"></div>
+							<div class="p">
+								<div class="input text">
+									<!--<a href="" class="pswd"></a>-->
+									<input type="password" class="ico2" placeholder="请输入登录密码">
+								</div>
+							</div>
+							<div class="ht10"></div>
+							<!--<div class="p">-->
+								<!--<p class="text-right">-->
+									<!--<a href="">忘记密码？</a>-->
+								<!--</p>-->
+							<!--</div>-->
+							<div class="ht50"></div>
+							<div class="p">
+								<p><a class="bt-1">登录</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="ft">
+						<p>版权所有2017 潜拓科技</p>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-------------------------------------- 主体结束 -------------------------------------->
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<footer>
+			<div class="container">
+				
+			</div>
+		</footer>
+		<!-------------------------------------- 尾部开始 -------------------------------------->
+		<script>
+			
+		</script>
+	</body>
+<script>
+    /**
+    * 模仿android里面的Toast效果，主要是用于在不打断程序正常执行的情况下显示提示数据
+    * @param config
+    * @return
+    */
+    var Toast = function(config){
+        this.context = config.context==null?$('body'):config.context;//上下文
+        this.message = config.message;//显示内容
+        this.time = config.time==null?3000:config.time;//持续时间
+        this.left = config.left;//距容器左边的距离
+        this.top = config.top;//距容器上方的距离
+        this.init();
+    }
+    var msgEntity;
+    Toast.prototype = {
+        //初始化显示的位置内容等
+        init : function(){
+            $("#toastMessage").remove();
+            //设置消息体
+            var msgDIV = new Array();
+            msgDIV.push('<div id="toastMessage" style="border-radius:18px;-moz-opacity:0.6;opacity:0.6;">');
+            msgDIV.push('<span>'+this.message+'</span>');
+            msgDIV.push('</div>');
+            msgEntity = $(msgDIV.join('')).appendTo(this.context);
+            //设置消息样式
+            var left = this.left == null ? this.context.width()/2-msgEntity.find('span').width()/2 : this.left;
+            var top = this.top == null ? '20px' : this.top;
+            msgEntity.css({position:'absolute',bottom:top,'z-index':'99',left:left,'background-color':'black',color:'white','font-size':'15px',padding:'10px',margin:'10px'});
+            msgEntity.hide();
+        },
+        //显示动画
+        show :function(){
+            msgEntity.fadeIn(this.time/2);
+            msgEntity.fadeOut(this.time/2);
+        }
+
+    }
+
+    $('.bt-1').click(function () {
+        $.ajax({
+            url:$clientURL+'/m/login',
+            type:'POST',
+            contentType: "application/json; charset=utf-8",
+            processData:   true,
+            dataType: "json",
+            data:JSON.stringify({
+                'username': $('.ico1').val(),
+                'password': $('.ico2').val()
+            }),
+            success: function(data){
+                if(data.valid){
+
+                    new Toast({context:$('body'),message:'登录成功'}).show();
+                    localStorage.setItem('token',data.token)
+                    window.location.href='03.html';
+
+				}else{
+					alert('账号或者密码错误')
+				}
+            },
+			error:function(err){
+                console.log(err)
+			}
+        });
+    })
+	
+</script>
+</html>

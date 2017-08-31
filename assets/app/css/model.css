@@ -1,0 +1,160 @@
+/*!
+ * model.css
+ */
+/*----------header----------*/
+header{
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+header .head{
+  background-color: #2a9af0;
+}
+header .head >.ct{
+
+}
+header .head >.ct p{
+  line-height: 5rem;
+  text-align: center;
+  color: #fff;
+  font-size: 1.6rem;
+}
+header .head >.bt{
+  position: absolute;
+  top: 0;
+  width: 5rem;
+  height: 5rem;
+  background: none no-repeat center;
+}
+header .head >.bt:active{
+  opacity: .8;
+}
+header .head >.bt.back{
+  left: 0;
+  background-image: url(../img/head-back.png);
+  background-size: .9rem auto;
+}
+
+
+/*-----------main-----------*/
+main{
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+body.no-header main{
+  padding-top: 0;
+}
+body.no-footer main{
+  padding-bottom: 0;
+}
+
+.bd-1{
+  background-color: #fff;
+  box-shadow: 0 2px 2px rgba(44, 153, 238, .1);
+  margin: .8rem;
+  border-radius: .3rem;
+}
+
+
+/*----------footer----------*/
+footer{
+  background-color: #f0f4f5;
+}
+footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+}
+footer .foot{
+
+}
+footer .foot ul{
+
+}
+footer .foot ul li{
+  float: left;
+}
+footer .foot.span3 ul li{
+  width: 33.33%;
+}
+footer .foot.span4 ul li{
+  width: 25%;
+}
+footer .foot .i{
+  display: block;
+  padding: .5rem 0;
+  height: 5rem;
+}
+footer .foot .i p{
+  text-align: center;
+  line-height: 1em;
+  color: #abb0b3;
+  font-size: 1rem;
+}
+footer .foot .i.on p,
+footer .foot .i:active p{
+  color: #2a9af0;
+}
+footer .foot .i p i{
+  display: inline-block;
+  width: 2.8rem;
+  height: 2.8rem;
+  background: none no-repeat center;
+  background-size: contain;
+  margin-bottom: .3em;
+}
+footer .foot .i p i.ico1{
+  background-image: url(../img/foot-ico1.png);
+}
+footer .foot .i.on p i.ico1,
+footer .foot .i:active p i.ico1{
+  background-image: url(../img/foot-ico1-on.png);
+}
+footer .foot .i p i.ico2{
+  background-image: url(../img/foot-ico2.png);
+}
+footer .foot .i.on p i.ico2,
+footer .foot .i:active p i.ico2{
+  background-image: url(../img/foot-ico2-on.png);
+}
+footer .foot .i p i.ico3{
+  background-image: url(../img/foot-ico3.png);
+}
+footer .foot .i.on p i.ico3,
+footer .foot .i:active p i.ico3{
+  background-image: url(../img/foot-ico3-on.png);
+}
+footer .foot .i p i.ico4{
+  background-image: url(../img/chart-ico1.png);
+}
+footer .foot .i.on p i.ico4,
+footer .foot .i:active p i.ico4{
+  background-image: url(../img/chart-ico1-on.png);
+}
+footer .foot .i p i.ico5{
+  background-image: url(../img/chart-ico2.png);
+}
+footer .foot .i.on p i.ico5,
+footer .foot .i:active p i.ico5{
+  background-image: url(../img/chart-ico2-on.png);
+}
+footer .foot .i p i.ico6{
+  background-image: url(../img/chart-ico3.png);
+}
+footer .foot .i.on p i.ico6,
+footer .foot .i:active p i.ico6{
+  background-image: url(../img/chart-ico3-on.png);
+}
+footer .foot .i p i.ico7{
+  background-image: url(../img/chart-ico4.png);
+}
+footer .foot .i.on p i.ico7,
+footer .foot .i:active p i.ico7{
+  background-image: url(../img/chart-ico4-on.png);
+}
+
+

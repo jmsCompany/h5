@@ -1,0 +1,36 @@
+/*!
+ * rewrite.css
+ */
+.form-control:focus{
+  border-color: #ccc;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: inset none;
+}
+ul,
+ol{
+  padding-left: 0;
+  margin-bottom: 0;
+}
+li{
+  list-style: none;
+}
+label{
+  font-weight: normal;
+  margin-bottom: 0;
+}
+:focus{
+  outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p{
+  margin: 0;
+}
+*{
+  text-decoration: none !important;
+}
